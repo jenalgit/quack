@@ -20,6 +20,7 @@ export class ChildComponent extends React.Component<
       <ParentComponent data={this.props.data as Quack.IGenericFigmaNode} />
     );
   };
+
   renderRectangle = () => {
     return <Rectangle data={this.props.data as Quack.IRectangle} />;
   };
@@ -34,8 +35,6 @@ export class ChildComponent extends React.Component<
 
   render() {
     let ele;
-    console.log("heheHE i am a child and my data is:");
-    console.log(this.props.data);
     switch (this.props.data.type) {
       case "GROUP":
       case "FRAME":

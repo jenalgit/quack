@@ -3,15 +3,15 @@ import * as Quack from "../../types";
 import { Color } from "figma-api";
 import { getColor } from "../../utils/index";
 
-interface RectangleProps {
-  data: Quack.IRectangle;
+interface EllipseProps {
+  data: Quack.IEllipse;
 }
 
-interface RectangleState {}
+interface EllipseState {}
 
 export default class Ellipse extends React.Component<
-  RectangleProps,
-  RectangleState
+  EllipseProps,
+  EllipseState
 > {
   getBorder = () => {
     const borderWidth = this.props.data.strokeWeight;

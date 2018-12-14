@@ -1,6 +1,8 @@
 import * as React from "react";
 import * as Quack from "../types";
+import Frame from "./components/Frame";
 import { ChildComponent } from "./ChildComponent";
+import { FRAME } from "figma-api";
 
 interface ComponentHandlerProps {
   data: Quack.IGenericFigmaNode;
@@ -14,19 +16,29 @@ export class ParentComponent extends React.Component<
   ComponentHandlerProps,
   ComponentHandlerState
 > {
-  render() {
+  renderChildren = () => {
     let ele = [];
-    let len = this.props.data.children.length;
-    console.log("oh hi hellow i am the parent");
-    console.log(this.props.data);
+    let len = this.props.data.children ? this.props.data.children.length : 0;
     for (let i = 0; i < len; i++) {
       let temp = <ChildComponent data={this.props.data.children[i]} />;
-      console.log("temp is");
-      console.log(temp);
       ele.push(temp);
     }
-    console.log("ele is ");
-    console.log(ele);
     return <div>{ele}</div>;
+  };
+
+  renderFrame = () => {
+    return (
+      <Frame data={(this.props.data as unknown) as FRAME}>
+        {this.renderChildren()}
+      </Frame>
+    );
+  };
+
+  render() {
+    if (this.props.data.type === "FRAME") {
+      return this.renderFrame();
+    } else {
+      return this.renderChildren();
+    }
   }
 }

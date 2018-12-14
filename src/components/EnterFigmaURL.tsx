@@ -37,19 +37,41 @@ export class EnterFigmaURL extends React.Component<
         // access file data
         console.log(file);
         this.setState({ submitted: true, data: file });
-        //this.renderPage(this.state.data.document);
       }
     });
   }
 
-  private renderPage(data: Quack.IGenericFigmaNode) {
-    let child = data.children[0];
+  private resetOrigin(
+    object: Quack.IGenericFigmaNode,
+    offset: Quack.ICoordinate
+  ) {
+    object.absoluteBoundingBox.x = object.absoluteBoundingBox.x - offset.x;
+    object.absoluteBoundingBox.y = object.absoluteBoundingBox.y - offset.y;
+    const len = object.children ? object.children.length : 0;
+    for (let i = 0; i < len; i++) {
+      this.resetOrigin(object.children[i], offset);
+    }
+  }
+
+  private resetOriginWrapper(canvas: Quack.IGenericFigmaNode) {
+    if (canvas.children == undefined || canvas.children[0].type !== "FRAME") {
+      console.log("YEET RESET ORIGIN WRAPPEER");
+      return;
+    }
+    const frame = canvas.children[0];
+    const offset: Quack.ICoordinate = {
+      x: frame.absoluteBoundingBox.x,
+      y: frame.absoluteBoundingBox.y
+    };
+    this.resetOrigin(frame, offset);
+  }
+
+  private renderPage() {
+    let child = this.state.data.document.children[0];
     while (child.type != "CANVAS") {
       child = child.children[0];
     }
-    //child = child.children;
-    console.log("child is");
-    console.log(child);
+    this.resetOriginWrapper(child);
     return <ParentComponent data={child} />;
   }
 
@@ -97,8 +119,6 @@ export class EnterFigmaURL extends React.Component<
   }
 
   render() {
-    return this.state.submitted
-      ? this.renderPage(this.state.data.document)
-      : this.renderInput();
+    return this.state.submitted ? this.renderPage() : this.renderInput();
   }
 }

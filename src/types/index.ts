@@ -1,4 +1,12 @@
-import { NodeType, VECTOR, RECTANGLE, TEXT, ELLIPSE } from "figma-api";
+import {
+  NodeType,
+  VECTOR,
+  RECTANGLE,
+  TEXT,
+  ELLIPSE,
+  Rectangle,
+  FRAME
+} from "figma-api";
 
 export interface IFigmaMetadata {
   id: string;
@@ -10,7 +18,15 @@ export interface IGenericFigmaNode {
   children?: [IGenericFigmaNode];
   id: nodeId;
   type: NodeType;
+  absoluteBoundingBox: Rectangle;
 }
+
+export interface ICoordinate {
+  x: number;
+  y: number;
+}
+
+export interface IFrame extends FRAME {}
 
 export interface IVector extends IGenericFigmaNode, VECTOR {
   /*

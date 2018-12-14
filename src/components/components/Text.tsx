@@ -34,7 +34,8 @@ export default class Text extends React.Component<TextProps, TextState> {
       fontStyle: inpStyle.italic ? "italic" : "normal",
       letterSpacing: inpStyle.letterSpacing,
       textAlign: textAlign,
-      color: color
+      color: color,
+      margin: 0
     };
 
     return <p style={style}>{data.characters}</p>;
