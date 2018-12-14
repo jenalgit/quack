@@ -2,6 +2,7 @@ import * as React from "react";
 import * as Quack from "../../types";
 import { Color } from "figma-api";
 import { getColor } from "../../utils/index";
+import Import from "./Import";
 
 interface TextProps {
   data: Quack.IText;
@@ -13,12 +14,12 @@ export default class Text extends React.Component<TextProps, TextState> {
   render() {
     const data = this.props.data;
     const absoluteBoundingBox = data.absoluteBoundingBox;
-    const inpStyle = data.style;
+    const font = data.style;
 
     const textAlign =
-      inpStyle.textAlignHorizontal === "JUSTIFIED"
+      font.textAlignHorizontal === "JUSTIFIED"
         ? "justify"
-        : inpStyle.textAlignHorizontal;
+        : font.textAlignHorizontal;
 
     const color = getColor(this.props.data.fills[0].color as Color);
 
@@ -28,16 +29,21 @@ export default class Text extends React.Component<TextProps, TextState> {
       top: absoluteBoundingBox.y + "px",
       width: absoluteBoundingBox.width + "px",
       height: absoluteBoundingBox.height + "px",
-      fontFamily: inpStyle.fontFamily,
-      fontSize: inpStyle.fontSize,
-      fontWeight: inpStyle.fontWeight,
-      fontStyle: inpStyle.italic ? "italic" : "normal",
-      letterSpacing: inpStyle.letterSpacing,
+      fontFamily: '"' + font.fontFamily + '"',
+      fontSize: font.fontSize,
+      fontWeight: font.fontWeight,
+      fontStyle: font.italic ? "italic" : "normal",
+      letterSpacing: font.letterSpacing,
       textAlign: textAlign,
       color: color,
       margin: 0
     };
 
-    return <p style={style}>{data.characters}</p>;
+    return (
+      <div>
+        <Import font={font.fontFamily} />
+        <p style={style}>{data.characters}</p>
+      </div>
+    );
   }
 }

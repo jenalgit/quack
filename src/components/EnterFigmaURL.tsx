@@ -12,6 +12,8 @@ interface EnterFigmaURLState {
   submitted: boolean;
 }
 
+export let documentId: string;
+
 export class EnterFigmaURL extends React.Component<
   EnterFigmaURLProps,
   EnterFigmaURLState
@@ -25,6 +27,7 @@ export class EnterFigmaURL extends React.Component<
 
   private handleOnChange(event: any): void {
     let id = parseFigmaURL(event.target.value).id;
+    documentId = id;
     this.setState({ id: id });
   }
 

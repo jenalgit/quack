@@ -22,7 +22,7 @@ export default class Frame extends React.Component<FrameProps, FrameState> {
     };
 
     return (
-      <div className="IMAFRAME" style={style}>
+      <div className={data.name} style={style}>
         {this.props.children}
       </div>
     );
