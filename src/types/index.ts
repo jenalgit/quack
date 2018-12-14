@@ -5,7 +5,8 @@ import {
   TEXT,
   ELLIPSE,
   Rectangle,
-  FRAME
+  FRAME,
+  LINE
 } from "figma-api";
 
 export interface IFigmaMetadata {
@@ -56,6 +57,8 @@ export interface IText extends IVector, TEXT {
     - style.letterSpacing
   */
 }
+
+export interface ILine extends IVector, LINE {}
 
 export type nodeId = string;
 

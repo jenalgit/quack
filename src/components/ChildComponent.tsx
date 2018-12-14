@@ -3,6 +3,7 @@ import * as Quack from "../types";
 import Rectangle from "./components/Rectangle";
 import Text from "./components/Text";
 import Ellipse from "./components/Ellipse";
+import Line from "./components/Line";
 import { ParentComponent } from "./ParentComponent";
 
 interface ChildComponentProps {
@@ -33,6 +34,10 @@ export class ChildComponent extends React.Component<
     return <Ellipse data={this.props.data as Quack.IEllipse} />;
   };
 
+  renderLine = () => {
+    return <Line data={this.props.data as Quack.ILine} />;
+  };
+
   render() {
     let ele;
     switch (this.props.data.type) {
@@ -50,6 +55,9 @@ export class ChildComponent extends React.Component<
         break;
       case "ELLIPSE":
         ele = this.renderEllipse();
+        break;
+      case "LINE":
+        ele = this.renderLine();
         break;
     }
     return <div className={this.props.data.name}>{ele}</div>;
