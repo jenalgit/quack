@@ -55,7 +55,6 @@ export class EnterFigmaURL extends React.Component<
 
   private resetOriginWrapper(canvas: Quack.IGenericFigmaNode) {
     if (canvas.children == undefined || canvas.children[0].type !== "FRAME") {
-      console.log("YEET RESET ORIGIN WRAPPEER");
       return;
     }
     const frame = canvas.children[0];
