@@ -7,12 +7,12 @@ import {
   Rectangle,
   FRAME,
   LINE
-} from "figma-api";
+} from "@dustinnewman98/figma-api";
 
 export interface IFigmaMetadata {
   id: string;
   title?: string;
-  root?: string;
+  nodes?: string;
 }
 
 export interface IGenericFigmaNode {

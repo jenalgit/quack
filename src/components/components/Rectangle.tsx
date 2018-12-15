@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as Quack from "../../types";
-import { Color } from "figma-api";
+import { Color } from "@dustinnewman98/figma-api";
 import { getColor, fetchImage } from "../../utils/index";
 
 interface RectangleProps {

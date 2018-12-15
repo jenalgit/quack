@@ -1,4 +1,4 @@
-import { Color } from "figma-api";
+import { Color } from "@dustinnewman98/figma-api";
 
 export function getColor(colorSrc: Color) {
   let red = colorSrc.r * 255;

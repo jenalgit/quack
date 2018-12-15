@@ -38,6 +38,10 @@ export class ChildComponent extends React.Component<
     return <Line data={this.props.data as Quack.ILine} />;
   };
 
+  renderVector = () => {
+    //TODO
+  };
+
   render() {
     let ele;
     switch (this.props.data.type) {
@@ -46,6 +50,9 @@ export class ChildComponent extends React.Component<
       case "COMPONENT":
       case "INSTANCE":
         ele = this.renderParent();
+        break;
+      case "VECTOR":
+        ele = this.renderVector();
         break;
       case "RECTANGLE":
         ele = this.renderRectangle();

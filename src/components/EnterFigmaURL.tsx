@@ -4,44 +4,58 @@ import { ParentComponent } from "./ParentComponent";
 import { parseFigmaURL } from "../utils";
 import api from "../api";
 
-interface EnterFigmaURLProps {}
+interface IEnterFigmaURLProps {}
 
-interface EnterFigmaURLState {
+interface IEnterFigmaURLState {
   id?: string;
-  data?: Figma.GetFileResult;
+  nodes?: string;
+  document?: Figma.GetFileResult;
   submitted: boolean;
 }
 
 export let documentId: string;
 
 export class EnterFigmaURL extends React.Component<
-  EnterFigmaURLProps,
-  EnterFigmaURLState
+  IEnterFigmaURLProps,
+  IEnterFigmaURLState
 > {
-  constructor(props: EnterFigmaURLProps) {
-    super(props);
-    this.state = { id: "", data: {}, submitted: false };
+  constructor() {
+    super();
+    this.state = { id: "", document: {}, submitted: false };
     this.handleOnChange = this.handleOnChange.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
   }
 
   private handleOnChange(event: any): void {
-    let id = parseFigmaURL(event.target.value).id;
+    const { id, nodes } = parseFigmaURL(event.target.value);
     documentId = id;
-    this.setState({ id: id });
+    this.setState({ id: id, nodes: nodes });
   }
 
   private handleKeyPress(): void {
     // get figma data
-    let id = this.state.id ? this.state.id : "";
+    const id = this.state.id ? this.state.id : "";
+    const nodes = this.state.nodes ? this.state.nodes : "";
+    console.log("nodes is");
+    console.log(nodes);
 
-    api.getFile(id).then(([err, file]) => {
-      if (file) {
-        // access file data
-        console.log(file);
-        this.setState({ submitted: true, data: file });
-      }
-    });
+    api
+      .getFileNodes(id, {
+        ids: nodes
+      })
+      .then(([err, file]) => {
+        if (file) {
+          // access file data
+          console.log(file);
+          let document;
+          if (file.nodes) {
+            document = file.nodes[this.state.nodes].document;
+          } else {
+            document = file.document;
+          }
+          this.setState({ submitted: true, document: document });
+        }
+      });
   }
 
   private resetOrigin(
@@ -56,11 +70,7 @@ export class EnterFigmaURL extends React.Component<
     }
   }
 
-  private resetOriginWrapper(canvas: Quack.IGenericFigmaNode) {
-    if (canvas.children == undefined || canvas.children[0].type !== "FRAME") {
-      return;
-    }
-    const frame = canvas.children[0];
+  private resetOriginWrapper(frame: Quack.IGenericFigmaNode) {
     const offset: Quack.ICoordinate = {
       x: frame.absoluteBoundingBox.x,
       y: frame.absoluteBoundingBox.y
@@ -69,10 +79,7 @@ export class EnterFigmaURL extends React.Component<
   }
 
   private renderPage() {
-    let child = this.state.data.document.children[0];
-    while (child.type != "CANVAS") {
-      child = child.children[0];
-    }
+    let child = this.state.document;
     this.resetOriginWrapper(child);
     return <ParentComponent data={child} />;
   }

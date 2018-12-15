@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Color, FRAME } from "figma-api";
+import { Color, FRAME } from "@dustinnewman98/figma-api";
 import { getColor } from "../../utils/index";
 
 interface FrameProps {

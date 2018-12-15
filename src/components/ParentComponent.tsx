@@ -2,7 +2,7 @@ import * as React from "react";
 import * as Quack from "../types";
 import Frame from "./components/Frame";
 import { ChildComponent } from "./ChildComponent";
-import { FRAME } from "figma-api";
+import { FRAME } from "@dustinnewman98/figma-api";
 
 interface ComponentHandlerProps {
   data: Quack.IGenericFigmaNode;
