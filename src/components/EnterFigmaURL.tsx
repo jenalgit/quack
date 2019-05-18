@@ -41,7 +41,8 @@ export class EnterFigmaURL extends React.Component<
 
     api
       .getFileNodes(id, {
-        ids: nodes
+        ids: nodes,
+        geometry: "paths"
       })
       .then(([err, file]) => {
         if (file) {

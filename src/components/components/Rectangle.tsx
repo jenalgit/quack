@@ -47,7 +47,7 @@ export default class Rectangle extends React.Component<
 
   getBorder = () => {
     const borderWidth = this.props.data.strokeWeight;
-    const borderColor = getColor(this.props.data.strokes[0].color as Color);
+    const borderColor = getColor(this.props.data.strokes[0] ?this.props.data.strokes[0].color as Color: {r: 0, g: 0, b: 0, a: 0} as Color);
 
     let border = borderWidth + "px solid " + borderColor;
     return border;
@@ -66,6 +66,7 @@ export default class Rectangle extends React.Component<
       background: this.state.hasImageFill
         ? this.state.imageURL
         : this.getBackground(),
+      border: this.getBorder(),
       borderRadius: data.cornerRadius + "px"
     };
 

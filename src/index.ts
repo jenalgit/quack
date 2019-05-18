@@ -4,6 +4,8 @@ import installExtension, {
 } from "electron-devtools-installer";
 import { enableLiveReload } from "electron-compile";
 
+import contextMenu from "electron-context-menu";
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow: Electron.BrowserWindow | null = null;
@@ -43,6 +45,23 @@ const createWindow = async () => {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on("ready", createWindow);
+
+contextMenu({
+  prepend: (defaultActions, params, browserWindow) => [
+    {
+      label: "Download as HTML",
+      click: (menuItem, browserWindow: Electron.BrowserWindow, event) => {
+        browserWindow.webContents.executeJavaScript(`
+          let hiddenElement = document.createElement('a');
+          hiddenElement.href = 'data:text/attachment;filename=quack.html;charset=utf-8,' + encodeURI(document.documentElement.innerHTML);
+          hiddenElement.target = '_blank';
+          hiddenElement.download = 'quack.html';
+          hiddenElement.click();
+        `);
+      }
+    }
+  ]
+});
 
 // Quit when all windows are closed.
 app.on("window-all-closed", () => {

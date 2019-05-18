@@ -5,6 +5,7 @@ import Text from "./components/Text";
 import Ellipse from "./components/Ellipse";
 import Line from "./components/Line";
 import { ParentComponent } from "./ParentComponent";
+import Vector from './components/Vector';
 
 interface ChildComponentProps {
   data: Quack.IGenericFigmaNode;
@@ -39,7 +40,7 @@ export class ChildComponent extends React.Component<
   };
 
   renderVector = () => {
-    //TODO
+    return <Vector data={this.props.data as Quack.IVector} />;
   };
 
   render() {

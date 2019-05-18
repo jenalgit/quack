@@ -31,8 +31,8 @@ export default class Ellipse extends React.Component<
       top: absoluteBoundingBox.y + "px",
       width: absoluteBoundingBox.width + "px",
       height: absoluteBoundingBox.height + "px",
+      borderRadius: "50%",
       backgroundColor: getColor(data.fills[0].color as Color),
-      cornerRadius: "50%"
     };
 
     return <div style={style} />;

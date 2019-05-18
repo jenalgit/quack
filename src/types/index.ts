@@ -6,7 +6,8 @@ import {
   ELLIPSE,
   Rectangle,
   FRAME,
-  LINE
+  LINE,
+  PathWindingRule
 } from "@dustinnewman98/figma-api";
 
 export interface IFigmaMetadata {
